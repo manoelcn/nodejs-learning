@@ -13,5 +13,4 @@ Criei esse repositório com o objeitvo de:
 ├── /anotacoes/          # Notas sobre conceitos, módulos e frameworks
 ├── /exemplos/           # Códigos pequenos para testar funcionalidades
 ├── /projetos/           # Projetos completos ou em desenvolvimento
-├── /recursos/           # Links úteis, artigos e documentação
 └── README.md            # Este arquivo
