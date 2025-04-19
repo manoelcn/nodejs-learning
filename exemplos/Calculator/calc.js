@@ -1,7 +1,7 @@
-const SomaFunc = require("./func/soma");
-const SubFunc = require("./func/sub");
-const MultiFunc = require("./func/multi");
-const DivFunc = require("./func/div");
+import SomaFunc from "./func/soma";
+import SubFunc from "./func/sub";
+import MultiFunc from "./func/multi";
+import DivFunc from "./func/div";
 
 const num1 = 10;
 const num2 = 10;

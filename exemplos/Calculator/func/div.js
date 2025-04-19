@@ -1,5 +1,5 @@
-var div = function (a, b) {
+function div(a, b) {
     return a / b;
 };
 
-module.exports = div;
+export default div;

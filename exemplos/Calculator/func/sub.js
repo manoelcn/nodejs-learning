@@ -1,5 +1,5 @@
-var sub = function (a, b) {
+function sub(a, b) {
     return a - b;
 };
 
-module.exports = sub;
+export default sub;
