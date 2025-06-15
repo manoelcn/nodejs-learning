@@ -18,6 +18,11 @@ const sequelize = new Sequelize('blog', 'root', '1234', {
 });
 
 
+// Rotas
+app.get('/cadastro', function (req, res) {
+    res.render('formulario');
+});
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}!`)
 });
