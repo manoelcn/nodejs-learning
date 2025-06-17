@@ -1,11 +1,15 @@
 import express from "express";
 import { engine } from "express-handlebars";
 import { Sequelize } from "sequelize";
+import bodyParser from "body-parser";
 
 // Config
-
 const app = express();
 const port = 8082;
+
+// Body Parser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // Template Engine
 app.engine('handlebars', engine());
