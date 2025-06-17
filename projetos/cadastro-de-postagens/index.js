@@ -23,6 +23,11 @@ app.get('/cadastro', function (req, res) {
     res.render('formulario');
 });
 
+app.post('/add', function (req, res) {
+    res.send('formulario recebido');
+});
+
+// Final do arquivo
 app.listen(port, () => {
     console.log(`Server running on port ${port}!`)
 });
