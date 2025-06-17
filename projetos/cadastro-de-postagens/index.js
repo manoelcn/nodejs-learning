@@ -28,7 +28,7 @@ app.get('/cadastro', function (req, res) {
 });
 
 app.post('/add', function (req, res) {
-    res.send('formulario recebido');
+    res.send(`<h1>${req.body.titulo}</h1> <p>${req.body.conteudo}</p>`);
 });
 
 // Final do arquivo
