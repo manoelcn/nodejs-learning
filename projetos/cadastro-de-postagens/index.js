@@ -16,6 +16,10 @@ app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 
 // Rotas
+app.get('/', function (req, res) {
+    res.render('home');
+})
+
 app.get('/cadastro', function (req, res) {
     res.render('formulario');
 });
@@ -25,7 +29,7 @@ app.post('/add', function (req, res) {
         titulo: req.body.titulo,
         conteudo: req.body.conteudo
     }).then(function () {
-        res.send('Post criado com sucesso!');
+        res.redirect('/');
     }).catch(function (erro) {
         res.send(`Erro! ${erro}`);
     });
