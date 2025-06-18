@@ -1,6 +1,7 @@
 import express from "express";
 import { engine } from "express-handlebars";
 import bodyParser from "body-parser";
+import Post from "./models/Post.js";
 
 // Config
 const app = express();
@@ -20,7 +21,15 @@ app.get('/cadastro', function (req, res) {
 });
 
 app.post('/add', function (req, res) {
-    res.send(`<h1>${req.body.titulo}</h1> <p>${req.body.conteudo}</p>`);
+    Post.create({
+        titulo: req.body.titulo,
+        conteudo: req.body.conteudo
+    }).then(function () {
+        res.send('Post criado com sucesso!');
+    }).catch(function (erro) {
+        res.send(`Erro! ${erro}`);
+    });
+
 });
 
 // Final do arquivo
