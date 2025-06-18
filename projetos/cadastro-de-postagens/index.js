@@ -1,6 +1,5 @@
 import express from "express";
 import { engine } from "express-handlebars";
-import { Sequelize } from "sequelize";
 import bodyParser from "body-parser";
 
 // Config
@@ -14,13 +13,6 @@ app.use(bodyParser.json());
 // Template Engine
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
-
-// Conexão com o bando de dados MySql
-const sequelize = new Sequelize('blog', 'root', '1234', {
-    host: 'localhost',
-    dialect: 'mysql'
-});
-
 
 // Rotas
 app.get('/cadastro', function (req, res) {
