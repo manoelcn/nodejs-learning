@@ -12,12 +12,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Template Engine
-app.engine('handlebars', engine());
+app.engine('handlebars', engine({
+    defaultLayout: 'main',
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    }
+}));
 app.set('view engine', 'handlebars');
 
 // Rotas
 app.get('/', function (req, res) {
-    Post.findAll({order: [['id', 'desc']]}).then(function (posts) {
+    Post.findAll({ order: [['id', 'desc']] }).then(function (posts) {
         res.render('home', { posts: posts });
     });
 })
