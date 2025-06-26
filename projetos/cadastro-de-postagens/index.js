@@ -44,6 +44,14 @@ app.post('/add', function (req, res) {
 
 });
 
+app.get('/deletar/:id', function (req, res) {
+    Post.destroy({ where: { 'id': req.params.id } }).then(function () {
+        res.redirect('/');
+    }).catch(function (erro) {
+        res.send('Esta postagem não existe.')
+    });
+});
+
 // Final do arquivo
 app.listen(port, () => {
     console.log(`Server running on port ${port}!`)
