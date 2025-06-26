@@ -17,7 +17,9 @@ app.set('view engine', 'handlebars');
 
 // Rotas
 app.get('/', function (req, res) {
-    res.render('home');
+    Post.findAll({order: [['id', 'desc']]}).then(function (posts) {
+        res.render('home', { posts: posts });
+    });
 })
 
 app.get('/cadastro', function (req, res) {
