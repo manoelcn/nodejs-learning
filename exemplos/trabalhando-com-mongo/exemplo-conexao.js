@@ -30,3 +30,6 @@ const usuarioSchema = mongoose.Schema({
         type: String
     }
 });
+
+// Definindo collection
+mongoose.model('usuarios', usuarioSchema);
