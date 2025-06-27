@@ -33,3 +33,18 @@ const usuarioSchema = mongoose.Schema({
 
 // Definindo collection
 mongoose.model('usuarios', usuarioSchema);
+
+// Inserindo dados
+const Usuario = mongoose.model('usuarios');
+
+new Usuario({
+    nome: 'Manoel',
+    sobrenome: 'Candido',
+    email: 'manoel@email.com',
+    idade: 19,
+    pais: 'Brasil'
+}).save().then(() => {
+    console.log('Usuário criado com sucesso!');
+}).catch((err) => {
+    console.log(`Houve um erro ao cadastrar o usuário: ${err}`);
+});
