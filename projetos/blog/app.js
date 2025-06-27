@@ -1,7 +1,7 @@
 // Importando módulos
 import express from 'express';
 import { engine } from "express-handlebars";
-import admin from './routes/admin.js';
+import adminRouter from './routes/admin.js';
 
 // Definindo constantes
 const app = express();
@@ -16,7 +16,7 @@ app.set('view engine', 'handlebars');
 app.set('views', './views');
 
 // Rotas
-app.use('/admin', admin);
+app.use('/admin', adminRouter);
 
 // Outros
 app.listen(PORT, () => {

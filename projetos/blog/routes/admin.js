@@ -1,16 +1,16 @@
 import express from 'express';
-const admin = express.Router();
+const adminRouter = express.Router();
 
-router.get('/', (req, res) => {
+adminRouter.get('/', (req, res) => {
     res.send('Página de ADMIN');
 });
 
-router.get('/posts', (req, res) => {
+adminRouter.get('/posts', (req, res) => {
     res.send('Página admin de posts');
 });
 
-router.get('/categorias', (req, res) => {
+adminRouter.get('/categorias', (req, res) => {
     res.send('Página admin de categorias');
 });
 
-export default admin;
+export default adminRouter;
