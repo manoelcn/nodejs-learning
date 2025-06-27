@@ -8,12 +8,14 @@ const app = express();
 const PORT = 8081;
 
 //Configurações
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-// Handlebars
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
-app.set('views', './views');
+    app.use(express.urlencoded({ extended: true }));
+    app.use(express.json());
+    // Handlebars
+        app.engine('handlebars', engine());
+        app.set('view engine', 'handlebars');
+        app.set('views', './views');
+    // Public
+        app.use(express.static('public'));
 
 // Rotas
 app.use('/admin', adminRouter);
