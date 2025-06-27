@@ -2,7 +2,7 @@ import express from 'express';
 const adminRouter = express.Router();
 
 adminRouter.get('/', (req, res) => {
-    res.send('Página de ADMIN');
+    res.render('admin/index');
 });
 
 adminRouter.get('/posts', (req, res) => {
