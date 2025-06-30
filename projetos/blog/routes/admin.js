@@ -10,7 +10,11 @@ adminRouter.get('/posts', (req, res) => {
 });
 
 adminRouter.get('/categorias', (req, res) => {
-    res.send('Página admin de categorias');
+    res.render('admin/categorias');
+});
+
+adminRouter.get('/categorias/add', (req, res) => {
+    res.render('admin/addcategorias');
 });
 
 export default adminRouter;
