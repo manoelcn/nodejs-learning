@@ -4,6 +4,8 @@ import { engine } from "express-handlebars";
 import adminRouter from './routes/admin.js';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import session from 'express-session';
+import flash from 'connect-flash';
 
 // Definindo constantes
 const app = express();
@@ -13,6 +15,19 @@ const PORT = 8081;
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
     dotenv.config();
+    // Session
+    app.use(session({
+        secret: process.env.SECRET,
+        resave: true,
+        saveUninitialized: true
+    }));
+    app.use(flash());
+    // Middleware
+    app.use((req, res, next) => {
+        res.locals.success_msg = req.flash('success_msg');
+        res.locals.error_msg = req.flash('error_msg');
+        next();
+    });
     // Handlebars
         app.engine('handlebars', engine());
         app.set('view engine', 'handlebars');
