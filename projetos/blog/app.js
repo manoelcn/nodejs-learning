@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import session from 'express-session';
 import flash from 'connect-flash';
+import moment from 'moment/moment.js';
 
 // Definindo constantes
 const app = express();
@@ -29,7 +30,13 @@ const PORT = 8081;
         next();
     });
     // Handlebars
-        app.engine('handlebars', engine());
+        app.engine('handlebars', engine({
+            helpers: {
+                formatDate: (date, format) => {
+                    return moment(date).format(format);
+                }
+            }
+        }));
         app.set('view engine', 'handlebars');
         app.set('views', './views');
     // Public
