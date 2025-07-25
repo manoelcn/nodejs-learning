@@ -54,5 +54,5 @@ app.use('/admin', adminRouter);
 
 // Outros
 app.listen(PORT, () => {
-    console.log('Server running...');
+    console.log('Server running in http://localhost:8081/...');
 });
