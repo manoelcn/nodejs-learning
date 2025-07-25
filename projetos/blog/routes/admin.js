@@ -81,4 +81,15 @@ adminRouter.post('/categorias/edit', (req, res) => {
     });
 });
 
+adminRouter.post('/categorias/deletar', (req, res) => {
+    Categoria.deleteOne({ _id: req.body.id }).lean().then(() => {
+        req.flash('success_msg', 'Categoria deletada com sucesso!');
+        res.redirect('/admin/categorias');
+    }).catch((err) => {
+        req.flash('error_msg', 'Erro ao deletar categoria!');
+        console.log(err);
+        res.redirect('/admin/categorias');
+    });
+});
+
 export default adminRouter;
