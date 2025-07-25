@@ -4,12 +4,15 @@
 
 {{#if categorias}}
 {{#each categorias}}
-<div class="card mt-4 mb-4 ">
-    <div class="card-header ">
+<div class="card mt-4 mb-4">
+    <div class="card-header">
         <h4>{{nome}}</h4>
     </div>
     <div class="card-body">
         <small>Data de criação: <b>{{formatDate date "DD/MM/YYYY"}}</b></small>
+    </div>
+    <div class="card-footer">
+        <a href="/admin/categorias/edit/{{_id}}"><button class="btn btn-primary">Editar</button></a>
     </div>
 </div>
 {{else}}
