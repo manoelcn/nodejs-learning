@@ -1,5 +1,6 @@
 import express, { Router } from 'express';
 import Categoria from "../models/Categoria.js";
+import Postagem from "../models/Postagem.js";
 
 const adminRouter = express.Router();
 
@@ -100,6 +101,34 @@ adminRouter.get('/postagens/add', (req, res) => {
         req.flash('error_msg', 'Erro ao carregar formulário!');
         res.redirect('/admin');
     });
+});
+
+adminRouter.post('/postagens/nova', (req, res) => {
+    const erros = [];
+
+    if (req.body.categoria == '0') {
+        erros.push({ texto: 'Categoria inválida!' });
+    };
+
+    if (erros.length > 0) {
+        res.render('admin/addpostagens', { erros: erros });
+    } else {
+        const novaPostagem = {
+            titulo: req.body.titulo,
+            slug: req.body.slug,
+            descricao: req.body.descricao,
+            conteudo: req.body.conteudo,
+            categoria: req.body.categoria
+        };
+        new Postagem(novaPostagem).save().then(() => {
+            req.flash('success_msg', `Postagem '${req.body.titulo}' criada com sucesso!`);
+            res.redirect('/admin/postagens');
+        }).catch((err) => {
+            req.flash('error_msg', 'Erro ao salvar postagem!');
+            console.log(`Erro ao salvar postagem! ${err}`);
+            res.redirect('/admin');
+        });
+    };
 });
 
 export default adminRouter;
