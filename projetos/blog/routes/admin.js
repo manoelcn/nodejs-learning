@@ -7,9 +7,6 @@ adminRouter.get('/', (req, res) => {
     res.render('admin/index');
 });
 
-adminRouter.get('/posts', (req, res) => {
-    res.send('Página admin de posts');
-});
 
 adminRouter.get('/categorias', (req, res) => {
     Categoria.find().sort({ date: 'desc' }).lean().then((categorias) => {
@@ -89,6 +86,19 @@ adminRouter.post('/categorias/deletar', (req, res) => {
         req.flash('error_msg', 'Erro ao deletar categoria!');
         console.log(err);
         res.redirect('/admin/categorias');
+    });
+});
+
+adminRouter.get('/postagens', (req, res) => {
+    res.render('admin/postagens');
+});
+
+adminRouter.get('/postagens/add', (req, res) => {
+    Categoria.find().lean().then((categorias) => {
+        res.render('admin/addpostagens', { categorias: categorias });
+    }).catch((err) => {
+        req.flash('error_msg', 'Erro ao carregar formulário!');
+        res.redirect('/admin');
     });
 });
 
