@@ -137,4 +137,42 @@ adminRouter.post('/postagens/nova', (req, res) => {
     };
 });
 
+adminRouter.get('/postagens/edit/:id', (req, res) => {
+    Postagem.findOne({ _id: req.params.id }).lean().then((postagem) => {
+        Categoria.find().lean().then((categorias) => {
+            res.render('admin/editpostagens', { categorias: categorias, postagem: postagem });
+        }).catch((err) => {
+            req.flash('error_msg', 'Erro ao listar categorias!');
+            console.log(`Erro ao listar categorias: ${err}`);
+            res.redirect('/admin/postagens');
+        });
+    }).catch((err) => {
+        req.flash('error_msg', 'Erro ao editar postagem!');
+        console.log(`Erro ao editar postagem: ${err}`);
+        res.redirect('/admin/postagens');
+    });
+});
+
+adminRouter.post('/postagens/edit', (req, res) => {
+    Postagem.findOne({ _id: req.body.id }).then((postagem) => {
+        postagem.titulo = req.body.titulo;
+        postagem.slug = req.body.slug;
+        postagem.descricao = req.body.descricao;
+        postagem.conteudo = req.body.conteudo;
+        postagem.categoria = req.body.categoria;
+        postagem.save().then(() => {
+            req.flash('success_msg', 'Postagem editada com sucesso!');
+            res.redirect('/admin/postagens');
+        }).catch((err) => {
+            req.flash('error_msg', 'Erro ao editar postagem!');
+            console.log(`Erro ao editar postagem: ${err}`)
+            res.redirect('/admin/postagens');
+        })
+    }).catch((err) => {
+        req.flash('error_msg', 'Erro ao editar postagem!');
+        console.log(`Erro ao editar postagem: ${err}`);
+        res.redirect('/admin/postagens');
+    });
+});
+
 export default adminRouter;
