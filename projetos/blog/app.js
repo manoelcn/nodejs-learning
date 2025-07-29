@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import session from 'express-session';
 import flash from 'connect-flash';
 import moment from 'moment/moment.js';
+import Postagem from './models/Postagem.js';
 
 // Definindo constantes
 const app = express();
@@ -50,6 +51,14 @@ const PORT = 8081;
         });
 
 // Rotas
+app.get('/', (req, res) => {
+    Postagem.find().populate('categoria').sort({ data: 'desc' }).lean().then((postagens) => {
+        res.render('index', { postagens: postagens});
+    }).catch((err) => {
+        req.flash('error_msg', 'Erro interno!');
+        console.log(`Erro interno: ${err}`);
+    });
+});
 app.use('/admin', adminRouter);
 
 // Outros
