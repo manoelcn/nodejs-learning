@@ -175,4 +175,15 @@ adminRouter.post('/postagens/edit', (req, res) => {
     });
 });
 
+adminRouter.post('/postagens/deletar', (req, res) => {
+    Postagem.deleteOne({ _id: req.body.id }).then(() => {
+        req.flash('success_msg', 'Postagem deletada com sucesso!');
+        res.redirect('/admin/postagens');
+    }).catch((err) => {
+        req.flash('error_msg', 'Erro ao deletar postagem!');
+        console.log(`Erro ao deletar postagem: ${err}`);
+        res.redirect('/admin/postagens');
+    });
+});
+
 export default adminRouter;
