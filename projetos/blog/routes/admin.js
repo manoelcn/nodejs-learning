@@ -91,7 +91,13 @@ adminRouter.post('/categorias/deletar', (req, res) => {
 });
 
 adminRouter.get('/postagens', (req, res) => {
-    res.render('admin/postagens');
+    Postagem.find().populate('categoria').sort({ data: 'desc' }).lean().then((postagens) => {
+        res.render('admin/postagens', { postagens: postagens });
+    }).catch((err) => {
+        req.flash('error_msg', 'Erro ao listar postagens!');
+        console.log(`Erro ao listar categorias: ${err}`);
+        res.redirect('/admin');
+    });
 });
 
 adminRouter.get('/postagens/add', (req, res) => {
