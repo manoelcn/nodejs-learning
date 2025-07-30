@@ -1,0 +1,13 @@
+
+    <h1 class="fw-bold mb-4">Categorias</h1>
+    <hr>
+
+    {{#each categorias}}
+    <div class="mb-3 p-3 border rounded shadow-sm bg-light">
+        <h4 class="mb-0">{{nome}}</h4>
+    </div>
+    {{else}}
+    <div class="alert alert-warning">
+        Nenhuma categoria encontrada.
+    </div>
+    {{/each}}
