@@ -53,10 +53,24 @@ const PORT = 8081;
 // Rotas
 app.get('/', (req, res) => {
     Postagem.find().populate('categoria').sort({ data: 'desc' }).lean().then((postagens) => {
-        res.render('index', { postagens: postagens});
+        res.render('index', { postagens: postagens });
     }).catch((err) => {
         req.flash('error_msg', 'Erro interno!');
         console.log(`Erro interno: ${err}`);
+    });
+});
+app.get('/postagem/:slug', (req, res) => {
+    Postagem.findOne({ slug: req.params.slug }).populate('categoria').lean().then((postagem) => {
+        if (postagem) {
+            res.render('postagem/index', { postagem: postagem });
+        } else {
+            req.flash('error_msg', 'Essa postagem não existe!');
+            res.redirect('/');
+        };
+    }).catch((err) => {
+        req.flash('error_msg', 'Erro interno!');
+        console.log(`Erro interno: ${err}`);
+        res.redirect('/');
     });
 });
 app.use('/admin', adminRouter);
