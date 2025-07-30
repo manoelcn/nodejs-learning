@@ -24,6 +24,13 @@
         </div>
         <div class="card-body">
             <p class="card-text">{{descricao}}</p>
+            <a href="/postagem/{{slug}}"><button class="btn btn-sm btn-outline-primary">Saiba mais...</button></a>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex gap-2">
+                <small>Categoria: <b>{{categoria.nome}}</b></small>
+                <small>Data: <b>{{formatDate date "DD/MM/YYYY"}}</b></small>
+            </div>
         </div>
     </div>
     {{else}}
