@@ -83,6 +83,26 @@ app.get('/categorias', (req, res) => {
         res.redirect('/');
     });
 });
+app.get('/categorias/:slug', (req, res) => {
+    Categoria.findOne({ slug: req.params.slug }).lean().then((categoria) => {
+        if (categoria) {
+            Postagem.find({ categoria: categoria._id }).lean().then((postagens) => {
+                res.render('categoria/postagens', { postagens: postagens, categoria: categoria });
+            }).catch((err) => {
+                req.flash('error_msg', 'Erro ao listar as postagens!');
+                console.log(`Errp ao listar postagens: ${err}`);
+                res.redirect('/');
+            });
+        } else {
+            req.flash('error_msg', 'Essa categoria não existe!');
+            res.redirect('/')
+        };
+    }).catch((err) => {
+        req.flash('error_msg', 'Erro ao carregar a página!');
+        console.log(`Erro interno: ${err}`);
+        res.redirect('/');
+    });
+});
 app.use('/admin', adminRouter);
 
 // Outros
