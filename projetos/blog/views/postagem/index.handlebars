@@ -1,0 +1,23 @@
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <article class="mb-5">
+                <header class="mb-4">
+                    <h1 class="fw-bold mb-1">{{postagem.titulo}}</h1>
+                    <div class="text-muted mb-2">
+                        <small class="me-3">
+                            <i class="bi bi-folder-fill"></i> {{postagem.categoria.nome}}
+                        </small>
+                        <small>
+                            <i class="bi bi-calendar-event"></i> {{formatDate postagem.date "DD/MM/YYYY"}}
+                        </small>
+                    </div>
+                    <h4 class="text-secondary fst-italic">{{postagem.descricao}}</h4>
+                </header>
+                <section class="fs-5 lh-lg">
+                    <p>{{postagem.conteudo}}</p>
+                </section>
+            </article>
+        </div>
+    </div>
+</div>
