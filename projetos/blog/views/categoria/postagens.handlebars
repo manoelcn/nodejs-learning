@@ -1,0 +1,18 @@
+<h1 class="fw-bold mb-4">Postagens sobre {{categoria.nome}}</h1>
+
+{{#each postagens}}
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <h4 class="card-title fw-bold">{{titulo}}</h4>
+        <p class="card-text text-secondary">{{descricao}}</p>
+        <a href="/postagem/{{slug}}" class="btn btn-sm btn-secondary">Saiba mais...</a>
+    </div>
+    <div class="card-footer bg-white small text-muted d-flex gap-2">
+        <span><i class="bi bi-calendar-event me-1"></i>{{formatDate date "DD/MM/YYYY"}}</span>
+    </div>
+</div>
+{{else}}
+<div class="alert alert-info" role="alert">
+    Nenhuma postagem encontrada!
+</div>
+{{/each}}
