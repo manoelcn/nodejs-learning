@@ -8,6 +8,7 @@ import session from 'express-session';
 import flash from 'connect-flash';
 import moment from 'moment/moment.js';
 import Postagem from './models/Postagem.js';
+import Categoria from './models/Categoria.js';
 
 // Definindo constantes
 const app = express();
@@ -67,6 +68,15 @@ app.get('/postagem/:slug', (req, res) => {
             req.flash('error_msg', 'Essa postagem não existe!');
             res.redirect('/');
         };
+    }).catch((err) => {
+        req.flash('error_msg', 'Erro interno!');
+        console.log(`Erro interno: ${err}`);
+        res.redirect('/');
+    });
+});
+app.get('/categorias', (req, res) => {
+    Categoria.find().lean().then((categorias) => {
+        res.render('categoria/index', { categorias: categorias });
     }).catch((err) => {
         req.flash('error_msg', 'Erro interno!');
         console.log(`Erro interno: ${err}`);
