@@ -69,4 +69,8 @@ userRouter.post('/registro', (req, res) => {
     };
 });
 
+userRouter.get('/login', (req, res) => {
+    res.render('usuarios/login');
+});
+
 export default userRouter;
