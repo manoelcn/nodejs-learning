@@ -2,6 +2,7 @@
 import express from 'express';
 import { engine } from "express-handlebars";
 import adminRouter from './routes/admin.js';
+import userRouter from './routes/usuarios.js';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import session from 'express-session';
@@ -104,6 +105,7 @@ app.get('/categorias/:slug', (req, res) => {
     });
 });
 app.use('/admin', adminRouter);
+app.use('/usuarios', userRouter);
 
 // Outros
 app.listen(PORT, () => {
