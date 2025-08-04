@@ -1,5 +1,6 @@
 import express from 'express';
 import Usuario from '../models/Usuario.js';
+import bcrypt from 'bcryptjs';
 
 const userRouter = express.Router();
 
@@ -33,8 +34,39 @@ userRouter.post('/registro', (req, res) => {
     if (erros.length > 0) {
         res.render('usuarios/registro', { erros: erros });
     } else {
-        console.log('vish alguem tem que ver isso ai 2.0');
-    }
+        Usuario.findOne({ email: req.body.email }).then((usuario) => {
+            if (usuario) {
+                req.flash('error_msg', 'E-mail já cadastrado!');
+                res.redirect('/usuarios/registro');
+            } else {
+                const novoUsuario = new Usuario({
+                    nome: req.body.nome,
+                    email: req.body.email,
+                    senha: req.body.senha
+                });
+                bcrypt.genSalt(10, (erro, salt) => {
+                    bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
+                        if (erro) {
+                            req.flash('error_msg', 'Erro ao salvar usuário!');
+                            res.redirect('/')
+                        };
+                        novoUsuario.senha = hash;
+                        novoUsuario.save().then(() => {
+                            req.flash('success_msg', 'Usuário criado com sucesso!');
+                            res.redirect('/');
+                        }).catch((err) => {
+                            req.flash('error_msg', 'Erro ao salvar usuário!');
+                            console.log(`Erro ao salvar usuário! ${err}`);
+                            res.redirect('/usuarios/registro');
+                        });
+                    });
+                });
+            };
+        }).catch((err) => {
+            req.flash('error_msg', 'Erro interno!');
+            res.redirect('/');
+        });
+    };
 });
 
 export default userRouter;
