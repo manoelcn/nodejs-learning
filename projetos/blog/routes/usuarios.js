@@ -83,9 +83,11 @@ userRouter.post('/login', (req, res, next) => {
 });
 
 userRouter.get('/logout', (req, res, next) => {
-    req.logout();
-    req.flash('success_msg', 'Deslogado com sucesso!');
-    res.redirect('/');
+    req.logout((err) => {
+        if (err) { return next(err); };
+        req.flash('success_msg', 'Deslogado com sucesso!');
+        res.redirect('/');
+    });
 });
 
 export default userRouter;
