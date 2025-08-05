@@ -1,10 +1,9 @@
-import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcryptjs';
 import Usuario from '../models/Usuario.js';
 
 const Passport = (passport) => {
-    passport.use(new LocalStrategy({ usernameField: 'email' }, (email, senha, done) => {
+    passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'senha' }, (email, senha, done) => {
         Usuario.findOne({ email: email }).then((usuario) => {
             if (!usuario) {
                 return done(null, false, { message: 'Essa conta não existe!' });
@@ -29,8 +28,10 @@ const Passport = (passport) => {
     });
 
     passport.deserializeUser((id, done) => {
-        Usuario.findById(id, (err, usuario) => {
-            done(err, usuario);
+        Usuario.findById(id).then((usuario) => {
+            done(null, usuario);
+        }).catch((err) => {
+            done(null, false, { message: 'Erro ao autenticar usuário!' });
         });
     });
 };
