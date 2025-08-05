@@ -1,6 +1,7 @@
 import express from 'express';
 import Usuario from '../models/Usuario.js';
 import bcrypt from 'bcryptjs';
+import passport from 'passport';
 
 const userRouter = express.Router();
 
@@ -71,6 +72,14 @@ userRouter.post('/registro', (req, res) => {
 
 userRouter.get('/login', (req, res) => {
     res.render('usuarios/login');
+});
+
+userRouter.post('/login', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/usuarios/login',
+        failureFlash: true
+    })(req, res, next);
 });
 
 export default userRouter;
