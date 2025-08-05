@@ -10,6 +10,9 @@ import flash from 'connect-flash';
 import moment from 'moment/moment.js';
 import Postagem from './models/Postagem.js';
 import Categoria from './models/Categoria.js';
+import passport from 'passport';
+import Passport from './config/auth.js';
+Passport(passport);
 
 // Definindo constantes
 const app = express();
@@ -25,6 +28,10 @@ const PORT = 8081;
         resave: true,
         saveUninitialized: true
     }));
+    // Passport
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     app.use(flash());
     // Middleware
     app.use((req, res, next) => {
