@@ -1,15 +1,16 @@
 import express, { Router } from 'express';
 import Categoria from "../models/Categoria.js";
 import Postagem from "../models/Postagem.js";
+import { isAdmin } from '../helpers/isAdmin.js';
 
 const adminRouter = express.Router();
 
-adminRouter.get('/', (req, res) => {
+adminRouter.get('/', isAdmin, (req, res) => {
     res.render('admin/index');
 });
 
 
-adminRouter.get('/categorias', (req, res) => {
+adminRouter.get('/categorias', isAdmin, (req, res) => {
     Categoria.find().sort({ date: 'desc' }).lean().then((categorias) => {
         res.render('admin/categorias', { categorias: categorias });
     }).catch((err) => {
@@ -19,11 +20,11 @@ adminRouter.get('/categorias', (req, res) => {
 
 });
 
-adminRouter.get('/categorias/add', (req, res) => {
+adminRouter.get('/categorias/add', isAdmin, (req, res) => {
     res.render('admin/addcategorias');
 });
 
-adminRouter.post('/categorias/nova', (req, res) => {
+adminRouter.post('/categorias/nova', isAdmin, (req, res) => {
 
     const erros = [];
 
@@ -53,7 +54,7 @@ adminRouter.post('/categorias/nova', (req, res) => {
     };
 });
 
-adminRouter.get('/categorias/edit/:id', (req, res) => {
+adminRouter.get('/categorias/edit/:id', isAdmin, (req, res) => {
     Categoria.findOne({ _id: req.params.id }).lean().then((categoria) => {
         res.render('admin/editcategorias', { categoria: categoria });
     }).catch((err) => {
@@ -62,7 +63,7 @@ adminRouter.get('/categorias/edit/:id', (req, res) => {
     })
 });
 
-adminRouter.post('/categorias/edit', (req, res) => {
+adminRouter.post('/categorias/edit', isAdmin, (req, res) => {
     Categoria.findOne({ _id: req.body.id }).then((categoria) => {
         categoria.nome = req.body.nome;
         categoria.slug = req.body.slug;
@@ -79,7 +80,7 @@ adminRouter.post('/categorias/edit', (req, res) => {
     });
 });
 
-adminRouter.post('/categorias/deletar', (req, res) => {
+adminRouter.post('/categorias/deletar', isAdmin, (req, res) => {
     Categoria.deleteOne({ _id: req.body.id }).lean().then(() => {
         req.flash('success_msg', 'Categoria deletada com sucesso!');
         res.redirect('/admin/categorias');
@@ -90,7 +91,7 @@ adminRouter.post('/categorias/deletar', (req, res) => {
     });
 });
 
-adminRouter.get('/postagens', (req, res) => {
+adminRouter.get('/postagens', isAdmin, (req, res) => {
     Postagem.find().populate('categoria').sort({ data: 'desc' }).lean().then((postagens) => {
         res.render('admin/postagens', { postagens: postagens });
     }).catch((err) => {
@@ -100,7 +101,7 @@ adminRouter.get('/postagens', (req, res) => {
     });
 });
 
-adminRouter.get('/postagens/add', (req, res) => {
+adminRouter.get('/postagens/add', isAdmin, (req, res) => {
     Categoria.find().lean().then((categorias) => {
         res.render('admin/addpostagens', { categorias: categorias });
     }).catch((err) => {
@@ -109,7 +110,7 @@ adminRouter.get('/postagens/add', (req, res) => {
     });
 });
 
-adminRouter.post('/postagens/nova', (req, res) => {
+adminRouter.post('/postagens/nova', isAdmin, (req, res) => {
     const erros = [];
 
     if (req.body.categoria == '0') {
@@ -137,7 +138,7 @@ adminRouter.post('/postagens/nova', (req, res) => {
     };
 });
 
-adminRouter.get('/postagens/edit/:id', (req, res) => {
+adminRouter.get('/postagens/edit/:id', isAdmin, (req, res) => {
     Postagem.findOne({ _id: req.params.id }).lean().then((postagem) => {
         Categoria.find().lean().then((categorias) => {
             res.render('admin/editpostagens', { categorias: categorias, postagem: postagem });
@@ -153,7 +154,7 @@ adminRouter.get('/postagens/edit/:id', (req, res) => {
     });
 });
 
-adminRouter.post('/postagens/edit', (req, res) => {
+adminRouter.post('/postagens/edit', isAdmin, (req, res) => {
     Postagem.findOne({ _id: req.body.id }).then((postagem) => {
         postagem.titulo = req.body.titulo;
         postagem.slug = req.body.slug;
@@ -175,7 +176,7 @@ adminRouter.post('/postagens/edit', (req, res) => {
     });
 });
 
-adminRouter.post('/postagens/deletar', (req, res) => {
+adminRouter.post('/postagens/deletar', isAdmin, (req, res) => {
     Postagem.deleteOne({ _id: req.body.id }).then(() => {
         req.flash('success_msg', 'Postagem deletada com sucesso!');
         res.redirect('/admin/postagens');
